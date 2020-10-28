@@ -1,0 +1,123 @@
+extends layout
+
+block content
+  h1 Tenants Info Update & Amenity Reservation Booking
+
+
+  if err
+    div.alert.alert-danger= err
+
+  if msg
+    div.alert.alert-success= msg
+
+  .row
+    .col-3
+      h2 Update Current Tenants
+      div
+        each s in tenants
+          form.p-2(action="/index/tDelete" method="POST")
+            input.flex-shrink-1.m-1(style="min-width:20px" type="hidden" name="$tenantID" value=s.tenantID)
+
+           
+            label.form-group First Name:
+              input.form-control.m-1(style="min-width:20px" type="text" name="$firstName" value=s.firstName)
+            label.form-group Last Name:
+              input.form-control.m-1(style="min-width:20px" type="text" name="$lastName" value=s.lastName)
+            .form-group
+              button.m-1.btn.btn-danger(type="submit" formaction="/index/tDelete") Delete
+              button.m-1.btn.btn-secondary(type="submit" formaction="/index/tUpdate") Update
+            hr
+
+      nav(aria-label="Page navigation example")
+        ul(class="pagination")
+          li(class="page-item")
+            a(class="page-link" href="/tenants?page=1") 1
+          li(class="page-item")
+            a(class="page-link" href="/tenants?page=2") 2
+          li(class="page-item")
+            a(class="page-link" href="/tenants?page=3") 3
+
+    .col-3
+      h2 Add New Tenants
+
+      form(action="/index/tCreate", method="POST")
+        .form-group
+          label Tenant ID
+            input.form-control(type="number", name="$tenantID")
+
+        .form-group
+          label First Name
+            input.form-control(type="text", name="$firstName")
+
+        .form-group
+          label Last Name
+            input.form-control(type="text", name="$lastName")
+
+        .form-group
+          label Phone Number
+            input.form-control(type="text", name="$phoneNumber")
+
+        .form-group
+          label Email Address
+            input.form-control(type="text", name="$emailAddress")
+
+        button.btn.btn-primary(type="submit") Add
+
+
+    .col-3
+      h2 Update Current Reservations
+      div
+        each k in reservations
+          form.p-2(action="/index/rDelete" method="POST")
+            input.flex-shrink-1.m-1(style="min-width:20px" type="hidden" name="$reservationID" value=k.reservationID)
+
+
+            label.form-group Date:
+              input.form-control.m-1(style="min-width:20px" type="text" name="$dateTime" value=k.dateTime)
+            label.form-group Amenity ID:
+              input.form-control.m-1(style="min-width:20px" type="number" name="$amenityID" value=k.amenityID)
+            label.form-group Tenant ID:
+              input.form-control.m-1(style="min-width:20px" type="number" name="$tenantID" value=k.tenantID)
+            .form-group
+              button.m-1.btn.btn-danger(type="submit" formaction="/index/rDelete") Delete
+              button.m-1.btn.btn-secondary(type="submit" formaction="/index/rUpdate") Update
+            hr
+
+      nav(aria-label="Page navigation example")
+        ul(class="pagination")
+          li(class="page-item")
+            a(class="page-link" href="/reservations?page=1") 1
+          li(class="page-item")
+            a(class="page-link" href="/reservations?page=2") 2
+          li(class="page-item")
+            a(class="page-link" href="/reservations?page=3") 3
+
+
+    .col-3
+      h2 Add New Reservations
+
+      form(action="/index/rCreate", method="POST")
+        .form-group
+          label Reservation ID
+            input.form-control(type="number", name="$reservationID")
+
+        .form-group
+          label Amenity ID
+            input.form-control(type="number", name="$amenityID")
+
+        .form-group
+          label Tenant ID
+            input.form-control(type="number", name="$tenantID")
+
+        .form-group
+          label Date
+            input.form-control(type="text", name="$dateTime")
+
+        .form-group
+          label Duration
+            input.form-control(type="number", name="$durationHrs")
+
+        button.btn.btn-primary(type="submit") Add
+
+
+//- then end
